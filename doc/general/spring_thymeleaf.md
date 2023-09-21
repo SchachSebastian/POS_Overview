@@ -1,7 +1,7 @@
 # Overview
 
 Spring is a framework for building web applications.
-Together with Thymeleaf, it provides a lot of functionality to build web applications.
+Together with Thymeleaf, it provides a lot of functionality to build dynamic webpages.
 
 ### Summary
 
