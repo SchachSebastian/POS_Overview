@@ -4,12 +4,24 @@ JUnit is a unit testing framework for Java. It is used to test the behavior of c
 [</> JunitExample.java](../../src/test/java/junit/JunitExample.java)
 
 ### Summary
-- [Annotations](#annotations)
-  - [@BeforeEach](#beforeeach)
-  - [@BeforeAll](#beforeall)
-  - [@Test](#test)
-  - [assert](#assert)
 
+- [Annotations](#annotations)
+	- [@BeforeEach](#beforeeach)
+	- [@BeforeAll](#beforeall)
+	- [@Test](#test)
+	- [assert](#assert)
+
+#### dependency
+
+```xml
+
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.8.1</version>
+    <scope>test</scope>
+</dependency>
+```
 
 ## Annotations
 
@@ -25,16 +37,17 @@ class TestClass {
     }
 }
 ```
+
 ### @BeforeAll
 
 annotation that defines a method that is executed before all tests
 
 ```java
 class TestClass {
-    @BeforeAll
-    static void setup() {
-       // do something
-    }
+	@BeforeAll
+	static void setup() {
+		// do something
+	}
 }
 ```
 
@@ -45,10 +58,10 @@ method will be executed when the test runs
 
 ```java
 class TestClass {
-    @Test
-    public void testMethod() {
-       // do something
-    }
+	@Test
+	public void testMethod() {
+		// do something
+	}
 }
 ```
 
@@ -59,13 +72,14 @@ in `@Test` methods, there can be multiple assert statements
 there are multiple assert methods, some of them are:
 
 - `assertEquals`
+
 ```java
 class TestClass {
-    @Test
-    public void testMethod() {
-       // do something
-       assertEquals(1, 1);
-    }
+	@Test
+	public void testMethod() {
+		// do something
+		assertEquals(1, 1);
+	}
 }
 ```
 
@@ -73,21 +87,22 @@ class TestClass {
 
 ```java
 class TestClass {
-    @Test
-    public void testMethod() {
-       // do something
-       assertTrue(1 == 1);
-    }
+	@Test
+	public void testMethod() {
+		// do something
+		assertTrue(1 == 1);
+	}
 }
 ```
+
 - `assertNull`
 
 ```java
 class TestClass {
-    @Test
-    public void testMethod() {
-        // do something
-        assertNull(null);
-    }
+	@Test
+	public void testMethod() {
+		// do something
+		assertNull(null);
+	}
 }
 ```

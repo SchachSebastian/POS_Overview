@@ -98,6 +98,21 @@ private class Person {
 //    }
 }
 ```
+
+if you want to include the super class fields in the toString method, you can use the `@ToString(callSuper = true)`
+annotation
+
+```java
+
+@ToString(callSuper = true)
+private class Person extends Human {
+  private String name;
+  private int age;
+//	public String toString() {
+//        return "Person(super=" + super.toString() + ", name=" + this.name + ", age=" + this.age + ")";
+//    }
+}
+```
 ### @EqualsAndHashCode
 Generates a equals and hashCode method for the annotated class.
 
