@@ -30,13 +30,22 @@ Together with Thymeleaf, it provides a lot of functionality to build dynamic web
 		- [th:object](#thobject)
 		- [th:field](#thfield)
 - [Logging](#logging)
+- [Validation](#validation)
+	- [@Valid](#valid)
+	- [Validation annotations](#validation-annotations)
+	- [Displaying errors](#displaying-errors)
+- [.properties files](#properties-files)
+	- [messages.properties](#messagesproperties)
+	- [ValidationMessages.properties](#validationmessagesproperties)
+- [Expression Objects](#expression-objects)
+	- [Basic Objects](#basic-objects)
+	- [Utility Objects](#utility-objects)
 
 ## Main
 
 The main class is the entry point of the application.
 
 ```java
-
 @SpringBootApplication
 public class Main {
 	public static void main(String[] args) {
@@ -51,7 +60,6 @@ A controller is a class that handles requests and returns a response.
 It's usually annotated with `@Controller` and contains methods annotated with `@GetMapping` or `@PostMapping`.
 
 ```java
-
 @Controller
 public class MainController {
 }
@@ -65,7 +73,6 @@ It returns a view name or `ModelAndView`.
 **View name**
 
 ```java
-
 @Controller
 public class MainController {
 	@GetMapping({"/", "/index"})
@@ -78,7 +85,6 @@ public class MainController {
 **ModelAndView**
 
 ```java
-
 @Controller
 public class MainController {
 	@GetMapping({"/", "/index"})
@@ -109,7 +115,6 @@ public class MainController {
 Adding this annotation to a method will make it return a response body instead of a view name|ModelAndView.
 
 ```java
-
 @Controller
 public class MainController {
 	@GetMapping({"/", "/index"})
@@ -125,7 +130,6 @@ public class MainController {
 This annotation is used to map a path variable to a method parameter.
 
 ```java
-
 @Controller
 public class MainController {
 	@GetMapping({"/category/{id}"})
@@ -141,7 +145,6 @@ public class MainController {
 This annotation is used to map a request parameter to a method parameter.
 
 ```java
-
 @Controller
 public class MainController {
 	@GetMapping({"/category"})
@@ -157,7 +160,6 @@ public class MainController {
 This annotation can be used to map a model attribute to a method parameter
 
 ```java
-
 @Controller
 public class MainController {
 	@PostMapping({"/category"})
@@ -172,7 +174,6 @@ or to make it available to all methods in the controller via `@ModelAttribute` o
 Note that this method will be called **before** each request.
 
 ```java
-
 @Controller
 public class MainController {
 	@ModelAttribute("category")
@@ -189,7 +190,6 @@ adding `@ControllerAdvice` to a class will make it available to all controllers.
 This annotation is used to map HTTP POST requests onto specific handler methods.
 
 ```java
-
 @Controller
 public class MainController {
 	@PostMapping({"/category"})
@@ -205,7 +205,6 @@ public class MainController {
 This annotation is used to store model attributes in the session.
 
 ```java
-
 @Controller
 @SessionAttributes({"object"})
 public class MainController {
@@ -222,7 +221,6 @@ public class MainController {
 To use templates, add the following dependency to your `pom.xml` file.
 
 ```xml
-
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -232,7 +230,6 @@ To use templates, add the following dependency to your `pom.xml` file.
 and add the following to every html template file to add thymeleaf support.
 
 ```html
-
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 </html>
 ```
@@ -244,7 +241,6 @@ and add the following to every html template file to add thymeleaf support.
 variables/standard expressions are prefixed with `$` and can be used to access variables in the model.
 
 ```html
-
 <div th:text="${message}"></div>
 ```
 
@@ -255,7 +251,6 @@ this will set the text of the div to the value of the variable `message` in the 
 selection variable expressions are prefixed with `*` and can be used to select a variable from an object.
 
 ```html
-
 <div th:object="${object}">
     <p th:text="*{field}"></p> <!-- this will resolve to ${object.field} -->
 </div>
@@ -269,12 +264,20 @@ link url expressions are prefixed with `@` and can be used to link to a controll
 <a th:href="@{/path}">link</a>
 ```
 
+#### message expressions
+
+message expressions are prefixed with `#` and can be used to access messages from the `messages.properties` file.
+
+```html
+
+<div th:text="#{message}"></div>
+```
+
 ### attributes
 
 thymeleaf attributes are prefixed with `th:`.
 
 ```html
-
 <div th:text="${message}"></div>
 ```
 
@@ -297,7 +300,6 @@ To set any native HTML attribute, you can use `th:attr` and specify the attribut
 value as the attribute value.
 
 ```html
-
 <div th:attr="id=${x}"></div>
 ```
 
@@ -308,7 +310,6 @@ value as the attribute value.
 this attribute will only render the element if the condition is true.
 
 ```html
-
 <div th:if="${condition}"></div>
 ```
 
@@ -317,7 +318,6 @@ this attribute will only render the element if the condition is true.
 this attribute will only render the element if the condition is false.
 
 ```html
-
 <div th:unless="${condition}"></div>
 ```
 
@@ -326,7 +326,6 @@ this attribute will only render the element if the condition is false.
 this attribute will switch between the elements inside it based on the value of the specified variable.
 
 ```html
-
 <div th:switch="${variable}">
     <p th:case="'1'">Value 1</p>
     <p th:case="'2'">Value 2</p>
@@ -343,7 +342,6 @@ this attribute will be used to specify a case in a `th:switch` element.
 this attribute will iterate over a list and render the element for each item in the list.
 
 ```html
-
 <div th:each="item : ${list}">
     <p th:text="${item}"></p>
 </div>
@@ -361,7 +359,6 @@ this attribute will iterate over a list and render the element for each item in 
 this attribute will set the object that will be used to resolve fields in the template.
 
 ```html
-
 <div th:object="${object}">
     <p th:text="${field}"></p> <!-- this will resolve to ${object.field} -->
 </div>
@@ -372,7 +369,6 @@ this attribute will set the object that will be used to resolve fields in the te
 this attribute will set the field that will be used to store the value of the element.
 
 ```html
-
 <div th:object="${object}">
     <input th:field="*{field}"/> <!-- this will resolve to ${object.field} -->
 </div>
@@ -383,7 +379,6 @@ this attribute will set the field that will be used to store the value of the el
 `@Slf4j` is a Lombok annotation that adds a logger to the class.
 
 ```java
-
 @Slf4j
 public class MainController {
 	public void index() {
@@ -391,3 +386,129 @@ public class MainController {
 	}
 }
 ```
+
+## Validation
+
+To use validation, add the following dependency to your `pom.xml` file.
+
+```xml
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+```
+
+### @Valid
+
+This annotation can be used to validate a model attribute.
+
+```java
+
+@Controller
+public class MainController {
+	@PostMapping({"/category"})
+	public String index(@Valid @ModelAttribute("category") Category category, BindingResult result) {
+		if (bindingResult.hasErrors()) {
+			return "category";
+		}
+		return "category-success";
+	}
+}
+```
+
+The `BindingResult` parameter is used to check if there are any errors.
+> Note that the `BindingResult` parameter must be directly after the model attribute parameter.
+
+### Validation annotations
+
+There are many validation annotations, a few of them are:
+
+- `@NotNull` - validates that the annotated property value is not null
+- `@AssertTrue` - validates that the annotated property value is true
+- `@Size` - validates that the annotated property value has a size between the attributes min and max; can be applied to
+  String, Collection, Map, and array properties
+- `@Min` - validates that the annotated property has a value no smaller than the value attribute
+- `@Max` - validates that the annotated property has a value no larger than the value attribute
+- `@Email` - validates that the annotated property is a valid email address
+
+You can also have multiple of the same validation annotations.
+
+Every validation annotation has a `message` attribute that can be used to specify a custom error message.
+
+```java
+public class Category {
+	@NotNull(message = "Name is required")
+	private String name;
+}
+```
+
+### Displaying errors
+
+To display errors, you can use the `th:errors` attribute together with `#fields.hasErrors()` and test which field has
+errors.
+
+```html
+
+<div th:object="${category}">
+    <input th:field="*{name}"/>
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+</div>
+```
+
+## .properties files
+
+There are a few different types of `.properties` files used by Thymeleaf.
+
+### messages.properties
+
+This file is used to store messages that can be used in the templates.
+
+```properties
+message = Hello World
+```
+
+```html
+
+<div th:text="#{message}"></div>
+```
+
+### ValidationMessages.properties
+
+This file is used to store validation messages.
+
+```properties
+category.name.notnull = Name is required
+```
+
+```java
+public class Category {
+	@NotNull(message = "{category.name.notnull}")
+	private String name;
+}
+```
+
+## Expression Objects
+
+Expression objects are objects that can be used in expressions.
+They are prefixed with `#` and can be used to access utility methods.
+For a complete list of expression objects, see
+the [thymeleaf documentation](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#appendix-b-expression-utility-objects).
+
+### Basic Objects
+
+- `#ctx` - the context object
+- `#vars` - the context variables
+- `#locale` - the context locale
+- `#fields` - the context fields, used for validation (hasErrors)
+
+### Utility Objects
+
+- `#dates` - utility methods for java.util.Date objects
+- `#calendars` - utility methods for java.util.Calendar objects
+- `#numbers` - utility methods for java.lang.Number objects
+- `#strings` - utility methods for java.lang.String objects
+- `#objects` - utility methods for java.lang.Object objects
+- `#bools` - utility methods for boolean values
+- `#arrays` - utility methods for arrays
+- ...
