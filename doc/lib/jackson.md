@@ -2,6 +2,8 @@
 Jackson is a Java API that allows you to convert objects to JSON and vice versa.
 
 ### Summary
+
+- [Dependencies](#dependencies)
 - [Jackson Annotations](#jackson-annotations)
   - [dependency](#dependency)
   - [class](#class)
@@ -17,16 +19,20 @@ Jackson is a Java API that allows you to convert objects to JSON and vice versa.
     - [@JsonSerialize](#jsonserialize)
     - [@JsonRootName](#jsonrootname)
 
-## Jackson Annotations
-#### dependency
+## Dependencies
 
 ```xml
-<dependency>
+<dependencies>
+  <dependency>
     <groupId>com.fasterxml.jackson.core</groupId>
     <artifactId>jackson-databind</artifactId>
     <version>2.14.1</version>
-</dependency>
+  </dependency>
+</dependencies>
 ```
+
+## Jackson Annotations
+
 ### class
 
 #### @JsonPropertyOrder

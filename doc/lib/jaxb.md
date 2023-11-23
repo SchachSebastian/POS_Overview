@@ -3,8 +3,9 @@
 JAXB is a Java API for XML Binding, it allows to convert Java objects into XML documents and vice versa
 
 ### Summary
+
+- [Dependencies](#dependencies)
 - [JAXB Annotations](#jaxb-annotations)
-  - [dependencies](#dependencies) 
   - [class](#class)
     - [@XmlAccessorType](#xmlaccessortype)
     - [@XmlRootElement](#xmlrootelement)
@@ -21,8 +22,8 @@ JAXB is a Java API for XML Binding, it allows to convert Java objects into XML d
   - [Marshalling](#marshalling)
   - [Unmarshalling](#unmarshalling)
 
-## JAXB Annotations
-#### dependencies
+## Dependencies
+
 ```xml
 <dependencies>
   <dependency>
@@ -44,6 +45,8 @@ JAXB is a Java API for XML Binding, it allows to convert Java objects into XML d
   </dependency>
 </dependencies>
 ```
+
+## JAXB Annotations
 
 ## class
 

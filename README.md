@@ -7,7 +7,9 @@ This repository contains general information about different topics taught durin
 ### General
 
 - [streams](doc/general/streams.md)
-- [spring - thymeleaf](doc/general/spring_thymeleaf.md)
+- [spring](doc/general/spring.md)
+  - [spring - thymeleaf](doc/general/spring_thymeleaf.md)
+  - [spring - jpa](doc/general/spring_jpa.md)
 
 ### libraries
 

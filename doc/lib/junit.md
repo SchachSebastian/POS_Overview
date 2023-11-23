@@ -5,22 +5,24 @@ JUnit is a unit testing framework for Java. It is used to test the behavior of c
 
 ### Summary
 
+- [Dependencies](#dependencies)
 - [Annotations](#annotations)
 	- [@BeforeEach](#beforeeach)
 	- [@BeforeAll](#beforeall)
 	- [@Test](#test)
 	- [assert](#assert)
 
-#### dependency
-
+## Dependencies
 ```xml
 
-<dependency>
-    <groupId>org.junit.jupiter</groupId>
-    <artifactId>junit-jupiter</artifactId>
-    <version>5.8.1</version>
-    <scope>test</scope>
-</dependency>
+<dependencies>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.8.1</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
 ```
 
 ## Annotations

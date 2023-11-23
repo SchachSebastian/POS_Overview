@@ -1,19 +1,10 @@
 # Overview
 
-Spring is a framework for building web applications.
-Together with Thymeleaf, it provides a lot of functionality to build dynamic webpages.
+Thymeleaf is a template engine for Java that can be used to create HTML templates.
 
 ### Summary
 
-- [Main](#main)
-- [Controller](#controller)
-	- [@GetMapping({""})](#getmapping)
-	- [@ResponseBody](#responsebody)
-	- [@PathVariable()](#pathvariable)
-	- [@RequestParam()](#requestparam)
-	- [@ModelAttribute()](#modelattribute)
-	- [@PostMapping({""})](#postmapping)
-	- [@SessionAttributes({""})](#sessionattributes)
+- [Dependencies](#dependencies)
 - [Templates](#templates)
 	- [expressions](#expressions)
 		- [variables/standard expressions](#variablesstandard-expressions)
@@ -29,191 +20,22 @@ Together with Thymeleaf, it provides a lot of functionality to build dynamic web
 		- [th:each](#theach)
 		- [th:object](#thobject)
 		- [th:field](#thfield)
-- [Logging](#logging)
-- [Validation](#validation)
-	- [@Valid](#valid)
-	- [Validation annotations](#validation-annotations)
-	- [Displaying errors](#displaying-errors)
-- [.properties files](#properties-files)
-	- [messages.properties](#messagesproperties)
-	- [ValidationMessages.properties](#validationmessagesproperties)
+- [Displaying errors from Validation](#displaying-errors-from-validation)
+- [messages.properties](#messagesproperties)
 - [Expression Objects](#expression-objects)
 	- [Basic Objects](#basic-objects)
 	- [Utility Objects](#utility-objects)
 
-## Main
+## Dependencies
 
-The main class is the entry point of the application.
+```xml
 
-```java
-@SpringBootApplication
-public class Main {
-	public static void main(String[] args) {
-		SpringApplication.run(Main.class, args);
-	}
-}
-```
-
-## Controller
-
-A controller is a class that handles requests and returns a response.
-It's usually annotated with `@Controller` and contains methods annotated with `@GetMapping` or `@PostMapping`.
-
-```java
-@Controller
-public class MainController {
-}
-```
-
-### @GetMapping({""})
-
-This annotation is used to map HTTP GET requests onto specific handler methods.
-It returns a view name or `ModelAndView`.
-
-**View name**
-
-```java
-@Controller
-public class MainController {
-	@GetMapping({"/", "/index"})
-	public String index() {
-		return "index"; // this returns index.html from templates
-	}
-}
-```
-
-**ModelAndView**
-
-```java
-@Controller
-public class MainController {
-	@GetMapping({"/", "/index"})
-	public String index() {
-		ModelAndView mv = new ModelAndView("index"); // set the view to index.html
-		mv.addObject("message", "Hello World"); // add objects required by the view to the model
-		return mv;
-	}
-}
-```
-
-**Model as parameter**
-Using a `Model` as a parameter in a method will make it available to the view.
-
-```java
-@Controller
-public class MainController {
-	@GetMapping({"/", "/index"})
-	public String index(Model model) {
-		model.addAttribute("message", "Hello World"); // add objects required by the view to the model
-		return "index"; // this returns index.html from templates
-	}
-}
-```
-
-### @ResponseBody
-
-Adding this annotation to a method will make it return a response body instead of a view name|ModelAndView.
-
-```java
-@Controller
-public class MainController {
-	@GetMapping({"/", "/index"})
-	@ResponseBody
-	public String index(Model model) {
-		return "Index Page"; // this returns "Index Page" as a response body
-	}
-}
-```
-
-### @PathVariable()
-
-This annotation is used to map a path variable to a method parameter.
-
-```java
-@Controller
-public class MainController {
-	@GetMapping({"/category/{id}"})
-	public String index(@PathVariable("id") int id, Model model) {
-		model.addAttribute("id", id); // adds the obtained id to the model
-		return "category"; // this returns "category.html" as a response body
-	}
-}
-```
-
-### @RequestParam()
-
-This annotation is used to map a request parameter to a method parameter.
-
-```java
-@Controller
-public class MainController {
-	@GetMapping({"/category"})
-	public String index(@RequestParam("id") int id, Model model) {
-		model.addAttribute("id", id); // adds the obtained id to the model
-		return "category"; // this returns "category.html" as a response body
-	}
-}
-```
-
-### @ModelAttribute()
-
-This annotation can be used to map a model attribute to a method parameter
-
-```java
-@Controller
-public class MainController {
-	@PostMapping({"/category"})
-	public String index(@ModelAttribute("category") Category category) {
-		return "category"; // this returns "category.html"
-		// as a response body containing the category object as a model attribute
-	}
-}
-```
-
-or to make it available to all methods in the controller via `@ModelAttribute` on a getter method.
-Note that this method will be called **before** each request.
-
-```java
-@Controller
-public class MainController {
-	@ModelAttribute("category")
-	public Category category() {
-		return new Category();
-	}
-}
-```
-
-adding `@ControllerAdvice` to a class will make it available to all controllers.
-
-### @PostMapping({""})
-
-This annotation is used to map HTTP POST requests onto specific handler methods.
-
-```java
-@Controller
-public class MainController {
-	@PostMapping({"/category"})
-	public String index(@ModelAttribute("category") Category category, Model model) {
-		model.addAttribute("category", category); // adds the obtained category to the model
-		return "category"; // this returns "category.html" as a response body
-	}
-}
-```
-
-### @SessionAttributes({""})
-
-This annotation is used to store model attributes in the session.
-
-```java
-@Controller
-@SessionAttributes({"object"})
-public class MainController {
-	@ModelAttribute("category")
-	public Category category() {
-		// will only be called once per session
-		return new Category();
-	}
-}
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+</dependencies>
 ```
 
 ## Templates
@@ -374,76 +196,7 @@ this attribute will set the field that will be used to store the value of the el
 </div>
 ```
 
-## Logging
-
-`@Slf4j` is a Lombok annotation that adds a logger to the class.
-
-```java
-@Slf4j
-public class MainController {
-	public void index() {
-		log.info("Hello World");
-	}
-}
-```
-
-## Validation
-
-To use validation, add the following dependency to your `pom.xml` file.
-
-```xml
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-validation</artifactId>
-</dependency>
-```
-
-### @Valid
-
-This annotation can be used to validate a model attribute.
-
-```java
-
-@Controller
-public class MainController {
-	@PostMapping({"/category"})
-	public String index(@Valid @ModelAttribute("category") Category category, BindingResult result) {
-		if (bindingResult.hasErrors()) {
-			return "category";
-		}
-		return "category-success";
-	}
-}
-```
-
-The `BindingResult` parameter is used to check if there are any errors.
-> Note that the `BindingResult` parameter must be directly after the model attribute parameter.
-
-### Validation annotations
-
-There are many validation annotations, a few of them are:
-
-- `@NotNull` - validates that the annotated property value is not null
-- `@AssertTrue` - validates that the annotated property value is true
-- `@Size` - validates that the annotated property value has a size between the attributes min and max; can be applied to
-  String, Collection, Map, and array properties
-- `@Min` - validates that the annotated property has a value no smaller than the value attribute
-- `@Max` - validates that the annotated property has a value no larger than the value attribute
-- `@Email` - validates that the annotated property is a valid email address
-
-You can also have multiple of the same validation annotations.
-
-Every validation annotation has a `message` attribute that can be used to specify a custom error message.
-
-```java
-public class Category {
-	@NotNull(message = "Name is required")
-	private String name;
-}
-```
-
-### Displaying errors
+## Displaying errors from Validation
 
 To display errors, you can use the `th:errors` attribute together with `#fields.hasErrors()` and test which field has
 errors.
@@ -456,11 +209,7 @@ errors.
 </div>
 ```
 
-## .properties files
-
-There are a few different types of `.properties` files used by Thymeleaf.
-
-### messages.properties
+## messages.properties
 
 This file is used to store messages that can be used in the templates.
 
@@ -471,21 +220,6 @@ message = Hello World
 ```html
 
 <div th:text="#{message}"></div>
-```
-
-### ValidationMessages.properties
-
-This file is used to store validation messages.
-
-```properties
-category.name.notnull = Name is required
-```
-
-```java
-public class Category {
-	@NotNull(message = "{category.name.notnull}")
-	private String name;
-}
 ```
 
 ## Expression Objects

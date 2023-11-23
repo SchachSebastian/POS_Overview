@@ -5,6 +5,9 @@ compile time.
 It adds annotations to your code that will be processed by the Lombok library.
 
 ### Summary
+
+- [Dependencies](#dependencies)
+- [Build](#build)
 - [Annotations](#annotations)
   - [@Getter](#getter)
   - [@Setter](#setter)
@@ -17,7 +20,44 @@ It adds annotations to your code that will be processed by the Lombok library.
   - [@Value](#value)
   - [@FieldDefaults](#fielddefaults)
   - [@Builder](#builder)
-  - [How does Lombok work](#how-does-lombok-work)
+  - [@Slf4j](#slf4j)
+- [How does Lombok work](#how-does-lombok-work)
+
+## Dependencies
+
+```xml
+
+<dependencies>
+  <dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <optional>true</optional>
+  </dependency>
+</dependencies>
+```
+
+## Build
+
+```xml
+
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-maven-plugin</artifactId>
+      <configuration>
+        <excludes>
+          <exclude>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+          </exclude>
+        </excludes>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+```
+
 ## Annotations
 
 ### @Getter
@@ -259,6 +299,20 @@ private class Person {
 //	public static PersonBuilder builder() {
 //		return new PersonBuilder();
 //	}
+}
+```
+
+### @Slf4j
+
+Adds a logger to the class.
+
+```java
+
+@Slf4j
+public class MainController {
+  public void index() {
+    log.info("Hello World");
+  }
 }
 ```
 
