@@ -25,11 +25,12 @@ Spring is a framework for building web applications.
 ## Dependencies
 
 ```xml
+
 <dependencies>
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-web</artifactId>
-	</dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
 </dependencies>
 ```
 
@@ -38,7 +39,6 @@ Spring is a framework for building web applications.
 The main class is the entry point of the application.
 
 ```java
-
 @SpringBootApplication
 public class Main {
 	public static void main(String[] args) {
@@ -53,7 +53,6 @@ This annotation is used to mark a class as a component.
 It's used to create Spring beans of the annotated classes.
 
 ```java
-
 @Component
 public class SomeComponent {
 }
@@ -62,7 +61,6 @@ public class SomeComponent {
 Spring beans can be injected into other classes using the `@Autowired` annotation or by using constructor injection.
 
 ```java
-
 @Controller
 public class MainController {
 	private final SomeComponent someComponent;
@@ -75,12 +73,28 @@ public class MainController {
 ## Controller
 
 A controller is a class that handles requests and returns a response.
-It's usually annotated with `@Controller` and contains methods annotated with `@GetMapping` or `@PostMapping`.
+
+### @Controller
+
+This annotation is used to mark a class as a controller.
+It's usually used for MVC controllers.
 `@Controller` is a specialization of `@Component`.
 
 ```java
-
 @Controller
+public class MainController {
+}
+```
+
+### @RestController
+
+This annotation is used to mark a class as a controller that returns a response body instead of a view name.
+It's usually used for REST APIs.
+`@RestController` is a specialization of `@Controller`.
+
+```java
+
+@RestController
 public class MainController {
 }
 ```
@@ -93,7 +107,6 @@ It returns a view name or `ModelAndView`.
 **View name**
 
 ```java
-
 @Controller
 public class MainController {
 	@GetMapping({"/", "/index"})
@@ -106,7 +119,6 @@ public class MainController {
 **ModelAndView**
 
 ```java
-
 @Controller
 public class MainController {
 	@GetMapping({"/", "/index"})
@@ -122,7 +134,6 @@ public class MainController {
 Using a `Model` as a parameter in a method will make it available to the view.
 
 ```java
-
 @Controller
 public class MainController {
 	@GetMapping({"/", "/index"})
@@ -138,7 +149,6 @@ public class MainController {
 Adding this annotation to a method will make it return a response body instead of a view name|ModelAndView.
 
 ```java
-
 @Controller
 public class MainController {
 	@GetMapping({"/", "/index"})
@@ -154,7 +164,6 @@ public class MainController {
 This annotation is used to map a path variable to a method parameter.
 
 ```java
-
 @Controller
 public class MainController {
 	@GetMapping({"/category/{id}"})
@@ -170,7 +179,6 @@ public class MainController {
 This annotation is used to map a request parameter to a method parameter.
 
 ```java
-
 @Controller
 public class MainController {
 	@GetMapping({"/category"})
@@ -186,7 +194,6 @@ public class MainController {
 This annotation can be used to map a model attribute to a method parameter
 
 ```java
-
 @Controller
 public class MainController {
 	@PostMapping({"/category"})
@@ -201,7 +208,6 @@ or to make it available to all methods in the controller via `@ModelAttribute` o
 Note that this method will be called **before** each request.
 
 ```java
-
 @Controller
 public class MainController {
 	@ModelAttribute("category")
@@ -218,7 +224,6 @@ adding `@ControllerAdvice` to a class will make it available to all controllers.
 This annotation is used to map HTTP POST requests onto specific handler methods.
 
 ```java
-
 @Controller
 public class MainController {
 	@PostMapping({"/category"})
@@ -234,7 +239,6 @@ public class MainController {
 This annotation is used to store model attributes in the session.
 
 ```java
-
 @Controller
 @SessionAttributes({"object"})
 public class MainController {
@@ -253,7 +257,6 @@ It's usually used to annotate classes that contain business logic.
 `@Service` is a specialization of `@Component`.
 
 ```java
-
 @Service
 public class MainService {
 }
@@ -266,7 +269,6 @@ It's usually used to annotate classes that contain database logic and connect to
 `@Repository` is a specialization of `@Component`.
 
 ```java
-
 @Repository
 public class CategoryRepository extends JpaRepository<Category, Integer> {
 }
@@ -289,7 +291,6 @@ To use validation, add the following dependency to your `pom.xml` file.
 This annotation can be used to validate a model attribute.
 
 ```java
-
 @Controller
 public class MainController {
 	@PostMapping({"/category"})
@@ -316,8 +317,7 @@ There are many validation annotations, a few of them are:
 - `@Min` - validates that the annotated property has a value no smaller than the value attribute
 - `@Max` - validates that the annotated property has a value no larger than the value attribute
 - `@Email` - validates that the annotated property is a valid email address
-
-You can also have multiple of the same validation annotations.
+  You can also have multiple of the same validation annotations.
 
 Every validation annotation has a `message` attribute that can be used to specify a custom error message.
 
