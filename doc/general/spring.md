@@ -21,6 +21,7 @@ Spring is a framework for building web applications.
 	- [@Valid](#valid)
 	- [Validation annotations](#validation-annotations)
 	- [ValidationMessages.properties](#validationmessagesproperties)
+- [@PostStruct](#poststruct)
 
 ## Dependencies
 
@@ -340,5 +341,22 @@ category.name.notnull = Name is required
 public class Category {
 	@NotNull(message = "{category.name.notnull}")
 	private String name;
+}
+```
+
+## @PostStruct
+
+This annotation is used to mark a method that will be executed after the bean is initialized.
+
+It can be used to load initial data into the database.
+
+```java
+
+@Component
+public class SomeComponent {
+	@PostConstruct
+	public void init() {
+		// will be executed after the bean is initialized
+	}
 }
 ```
