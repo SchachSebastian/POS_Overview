@@ -38,6 +38,17 @@ Spring JPA is a library that allows you to easily create a data access layer for
 </dependencies>
 ```
 
+include the used `database driver` as well, for **postgres** it would be:
+
+```xml
+
+<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <scope>runtime</scope>
+</dependency>
+```
+
 ## Configuration
 
 Add the following to your `application.properties` file to configure the database connection.
@@ -46,7 +57,7 @@ Add the following to your `application.properties` file to configure the databas
 spring.datasource.url               = jdbc:database_driver://database_url:database_port/db_name
 spring.datasource.username          = username
 spring.datasource.password          = password
-spring.datasource.driver-class-name = driver_class_name
+spring.datasource.driver-class-name = driver_class_name (for postgres it's org.postgresql.Driver)
 spring.jpa.hibernate.ddl-auto       = update
 ```
 
