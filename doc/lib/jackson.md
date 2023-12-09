@@ -5,7 +5,6 @@ Jackson is a Java API that allows you to convert objects to JSON and vice versa.
 
 - [Dependencies](#dependencies)
 - [Jackson Annotations](#jackson-annotations)
-  - [dependency](#dependency)
   - [class](#class)
     - [@JsonPropertyOrder](#jsonpropertyorder)
     - [@JsonIgnoreProperties](#jsonignoreproperties)
@@ -13,10 +12,12 @@ Jackson is a Java API that allows you to convert objects to JSON and vice versa.
     - [@JsonProperty](#jsonproperty)
     - [@JsonAnyGetter](#jsonanygetter)
     - [@JsonAnySetter](#jsonanysetter)
+    - [@JsonSerialize](#jsonserialize)
+    - [@JsonDeserialize](#jsondeserialize)
+    - [@JsonAlias](#jsonalias)
+    - [@JsonIgnore](#jsonignore)
     - [@JsonUnwrapped](#jsonunwrapped)
     - [@JsonManagedReference / @JsonBackReference](#jsonmanagedreference--jsonbackreference)
-    - [@JsonDeserialize](#jsondeserialize)
-    - [@JsonSerialize](#jsonserialize)
     - [@JsonRootName](#jsonrootname)
 
 ## Dependencies
@@ -48,11 +49,20 @@ public class Person {
 #### @JsonIgnoreProperties
 defines which fields will be ignored when serializing/deserializing
 ```java
-@JsonIgnoreProperties({"id", "name"})
+
+@JsonIgnoreProperties({"id", "name", "randomValue"})
 public class Person {
     private int id; // will be ignored
     private String name; // will be ignored
     private int age;
+}
+```
+
+```json
+{
+  "age": 20,
+  "randomValue": "random"
+  // will be ignored as well
 }
 ```
 
@@ -61,14 +71,12 @@ public class Person {
 #### @JsonProperty
 defines the name of the field in the JSON
 
-**java**
 ```java
 public class Person {
     @JsonProperty("person_id")
     private int id;
 }
 ```
-**json**
 ```json
 {
   "person_id": 1
@@ -78,7 +86,6 @@ public class Person {
 #### @JsonAnyGetter
 defines a method that will be used to get the map of additional properties, that are not defined in the class
 
-**java**
 ```java
 public class Person {
     private Map<String, String> additionalProperties = new HashMap<>();
@@ -92,7 +99,6 @@ public class Person {
 #### @JsonAnySetter
 defines a method that will be used to set the additional properties, that are not defined in the class
 
-**java**
 ```java
 public class Person {
     private Map<String, String> additionalProperties = new HashMap<>();
@@ -106,7 +112,6 @@ public class Person {
 
 #### @JsonSerialize
 defines a custom serializer for the field
-**java**
 ```java
 public class Person {
     @JsonSerialize(using = CustomSerializer.class)
@@ -133,7 +138,6 @@ public class CustomSerializer<T> extends StdSerializer<T> {
 
 #### @JsonDeserialize
 defines a custom deserializer for the field
-**java**
 ```java
 public class Person {
     @JsonDeserialize(using = CustomDeserializer.class)
@@ -155,32 +159,36 @@ public class CustomDeserializer extends StdDeserializer<String> {
 ```
 #### @JsonAlias
 defines an alias for the field
-**java**
 ```java
 public class Person {
     @JsonAlias({"person_id", "id"})
     private int id;
 }
 ```
-**json**
 ```json
 {
   "person_id": 1
-},
+}
+```
+
+or
+
+```json
 {
   "id": 1
 }
 ```
 #### @JsonIgnore
 defines that the field will be ignored when serializing/deserializing
+
 ```java
 public class Person {
     @JsonIgnore
     private int id;
-	private String name;
+  private String name;
 }
 ```
-**json**
+
 ```json
 {
   "name": "John"
@@ -194,7 +202,6 @@ public class Person {
     private Address address;
 }
 ```
-**json**
 ```json
 {
   "street": "Main Street",
@@ -238,7 +245,6 @@ public class Address {
 ```
 #### @JsonRootName
 defines the root name of the JSON
-**java**
 ```java
 @JsonRootName("person")
 public class Person {
@@ -246,7 +252,6 @@ public class Person {
     private String name;
 }
 ```
-**json**
 ```json
 {
   "person": {

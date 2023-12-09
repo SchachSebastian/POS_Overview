@@ -62,14 +62,12 @@ this just defines what and how JAXB will access, you can still use the variables
 
 defines the root element of an XML document
 
-**java**
 ```java
 @XmlRootElement(name = "book")
 class Book {
     //...
 }
 ```
-**xml**
 ```xml
 <book>...</book>
 ```
@@ -80,14 +78,12 @@ class Book {
 ##### propOrder
 
 defines the order of the fields in the XML document
-**java**
 ```java
 @XmlType(propOrder = {"id", "title", "author"})
 class Book {
     //...
 }
 ```
-**xml**
 ```xml
 <book>
     <id>1</id>
@@ -105,14 +101,12 @@ marks a field or property as an XML attribute
 
 - **name** - optional, defines the name of the attribute in xml
 
-**java**
 ```java
 class Book {
 	@XmlAttribute
 	private Long id;
 }
 ```
-**xml**
 ```xml
 <book id="1">...</book>
 ```
@@ -122,14 +116,12 @@ marks a field or property as an XML element
 #### arguments
 
 - **name** - optional, defines the name of the attribute in xml
-**java**
 ```java
 class Book {
     @XmlElement
     private String title;
 }
 ```
-**xml**
 ```xml
 <book>
     <title>...</title>
@@ -139,14 +131,12 @@ class Book {
 ### @XmlTransient
 marks a field or property as transient, i.e. it will not be serialized
 
-**java**
 ```java
 class Book {
     @XmlTransient
     private String title;
 }
 ```
-**xml**
 ```xml
 <book>...</book>
 ```
@@ -155,7 +145,6 @@ class Book {
 marks a field or property as an XML element, but wraps it in a wrapper element
 often used to wrap collections
 
-**java**
 ```java
 class Book {
     @XmlElementWrapper(name = "authors")
@@ -163,7 +152,6 @@ class Book {
     private List<String> authors;
 }
 ```
-**xml**
 ```xml
 <book>
     <authors>
@@ -176,7 +164,6 @@ class Book {
 ### @XmlJavaTypeAdapter
 allows to use a custom adapter to convert a field or property to/from XML
 
-**java**
 ```java
 class Book {
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
