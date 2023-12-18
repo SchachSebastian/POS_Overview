@@ -10,6 +10,7 @@ This repository contains general information about different topics taught durin
 - [spring](doc/general/spring.md)
   - [spring - thymeleaf](doc/general/spring_thymeleaf.md)
   - [spring - jpa](doc/general/spring_jpa.md)
+- [javascript & html](doc/general/javascript_html.md)
 
 ### libraries
 

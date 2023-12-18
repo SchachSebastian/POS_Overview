@@ -8,6 +8,9 @@ Spring is a framework for building web applications.
 - [Main](#main)
 - [@Component](#component)
 - [Controller](#controller)
+	- [@Controller](#controller)
+	- [@RestController](#restcontroller)
+	- [@RequestMapping()](#requestmapping)
 	- [@GetMapping({""})](#getmapping)
 	- [@ResponseBody](#responsebody)
 	- [@PathVariable()](#pathvariable)
@@ -100,8 +103,40 @@ public class MainController {
 }
 ```
 
+### @RequestMapping()
+
+This annotation is used to map a request to a method.
+
+You can specify the **path** of the request in the annotation and the **method type**.
+
+```java
+
+@Controller
+public class MainController {
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String index() {
+		return "index"; // this returns index.html from templates
+	}
+}
+```
+
+It can also be used to map a request to a class.
+
+```java
+
+@Controller
+@RequestMapping("/category")
+public class CategoryController {
+	@RequestMapping({"/", "/index"})
+	public String index() {
+		return "category"; // this returns category.html from templates
+	}
+}
+```
+
 ### @GetMapping({""})
 
+Is a shortcut for `@RequestMapping(method = RequestMethod.GET)`.
 This annotation is used to map HTTP GET requests onto specific handler methods.
 It returns a view name or `ModelAndView`.
 
@@ -222,6 +257,7 @@ adding `@ControllerAdvice` to a class will make it available to all controllers.
 
 ### @PostMapping({""})
 
+Is a shortcut for `@RequestMapping(method = RequestMethod.POST)`.
 This annotation is used to map HTTP POST requests onto specific handler methods.
 
 ```java
