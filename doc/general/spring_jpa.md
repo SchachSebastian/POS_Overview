@@ -22,6 +22,7 @@ Spring JPA is a library that allows you to easily create a data access layer for
 	- [@ManyToMany](#manytomany)
 	- [@JoinColumn](#joincolumn)
 	- [@JoinTable](#jointable)
+	- [@Enumerated](#enumerated)
 - [Repository](#repository)
 	- [@Query](#query)
 		- [@Param](#param)
@@ -91,7 +92,6 @@ This property is used to format the SQL queries and make them more readable.
 This annotation is used to mark a class as an entity.
 
 ```java
-
 @Entity
 public class User {
 }
@@ -102,7 +102,6 @@ public class User {
 This annotation is used to mark a field as the primary key.
 
 ```java
-
 @Entity
 public class User {
 	@Id
@@ -115,7 +114,6 @@ public class User {
 This annotation is used to configure the generation of the primary key.
 
 ```java
-
 @Entity
 public class User {
 	@Id
@@ -138,7 +136,6 @@ it can be used with the following strategies:
 This annotation is used to configure the column of a field.
 
 ```java
-
 @Entity
 public class User {
 	@Column(name = "user_name", nullable = false, unique = true)
@@ -151,7 +148,6 @@ public class User {
 This annotation is used to configure the table of an entity.
 
 ```java
-
 @Entity
 @Table(name = "users", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "birthday"}))
 public class User {
@@ -175,7 +171,6 @@ Any field that is not annotated with `@Column` or `@Id` is considered transient.
 Data in transient fields will not be saved to the database.
 
 ```java
-
 @Entity
 public class User {
 	@Transient
@@ -188,7 +183,6 @@ public class User {
 This annotation is used to configure a one-to-many relationship.
 
 ```java
-
 @Entity
 public class User {
 	@OneToMany(mappedBy = "user")
@@ -201,7 +195,6 @@ public class User {
 This annotation is used to configure a many-to-one relationship.
 
 ```java
-
 @Entity
 public class Book {
 	@ManyToOne
@@ -214,7 +207,6 @@ public class Book {
 This annotation is used to configure a one-to-one relationship.
 
 ```java
-
 @Entity
 public class User {
 	@OneToOne
@@ -227,7 +219,6 @@ public class User {
 This annotation is used to configure a many-to-many relationship.
 
 ```java
-
 @Entity
 public class User {
 	@ManyToMany
@@ -236,7 +227,6 @@ public class User {
 ```
 
 ```java
-
 @Entity
 public class Book {
 	@ManyToMany
@@ -251,7 +241,6 @@ This annotation is used to configure the join column of a relationship.
 JPA also works **without** `@JoinColumn`, but it will use its own naming convention for the join column.
 
 ```java
-
 @Entity
 public class Book {
 	@ManyToOne
@@ -267,7 +256,6 @@ This annotation is used to configure the join table of a many-to-many relationsh
 JPA also works **without** `@JoinTable`, but it will use its own naming convention for the join table.
 
 ```java
-
 @Entity
 public class User {
 	@ManyToMany
@@ -278,13 +266,37 @@ public class User {
 ```
 
 ```java
-
 @Entity
 public class Book {
 	@ManyToMany
 	@JoinTable(name = "user_book", joinColumns = @JoinColumn(name = "book_id"),
 			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> users;
+}
+```
+
+### @Enumerated
+
+This annotation is used to configure the mapping of an enum.
+
+| Value   | Description                         |
+|---------|-------------------------------------|
+| ORDINAL | Maps the enum to its ordinal value. |
+| STRING  | Maps the enum to its name.          |
+
+```java
+public enum Role {
+	ADMIN,
+	USER
+}
+```
+
+```java
+
+@Entity
+public class User {
+	@Enumerated(EnumType.STRING)
+	private Role role;
 }
 ```
 
