@@ -15,6 +15,7 @@ Spring is a framework for building web applications.
 	- [@ResponseBody](#responsebody)
 	- [@PathVariable()](#pathvariable)
 	- [@RequestParam()](#requestparam)
+	- [@RequestBody](#requestbody)
 	- [@ModelAttribute()](#modelattribute)
 	- [@PostMapping({""})](#postmapping)
 	- [@SessionAttributes({""})](#sessionattributes)
@@ -221,6 +222,21 @@ public class MainController {
 	public String index(@RequestParam("id") int id, Model model) {
 		model.addAttribute("id", id); // adds the obtained id to the model
 		return "category"; // this returns "category.html" as a response body
+	}
+}
+```
+
+### @RequestBody
+
+This annotation is used to map the request body to a method parameter.
+
+```java
+
+@Controller
+public class MainController {
+	@PostMapping({"/category"})
+	public String add(@RequestBody Category category) {
+		// code
 	}
 }
 ```
