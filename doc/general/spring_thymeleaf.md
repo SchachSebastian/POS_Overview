@@ -10,6 +10,8 @@ Thymeleaf is a template engine for Java that can be used to create HTML template
 		- [variables/standard expressions](#variablesstandard-expressions)
 		- [selection variable expressions](#selection-variable-expressions)
 		- [link url expressions](#link-url-expressions)
+		- [message expressions](#message-expressions)
+		- [fragment expressions](#fragment-expressions)
 	- [attributes](#attributes)
 		- [th:attr](#thattr)
 	- [special attributes](#special-attributes)
@@ -93,6 +95,20 @@ message expressions are prefixed with `#` and can be used to access messages fro
 ```html
 
 <div th:text="#{message}"></div>
+```
+
+#### fragment expressions
+
+fragment expressions are prefixed with `~` and can be used to include a fragment from another template.
+
+```html
+<!--template.html-->
+<div th:fragment="fragment"></div>
+```
+
+```html
+
+<div th:replace="~{template :: fragment}"></div>
 ```
 
 ### attributes
