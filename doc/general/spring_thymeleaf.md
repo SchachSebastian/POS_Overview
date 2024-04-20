@@ -107,7 +107,7 @@ fragment expressions are prefixed with `~` and can be used to include a fragment
 ```
 
 ```html
-
+<!--other.html-->
 <div th:replace="~{template :: fragment}"></div>
 ```
 

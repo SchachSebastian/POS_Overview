@@ -128,6 +128,24 @@ class Book {
 </book>
 ```
 
+### @XmlValue
+
+marks a field or property as the value of an XML element
+
+```java
+
+@XmlRootElement(name = "book")
+class Book {
+  @XmlValue
+  private String title;
+}
+```
+
+```xml
+
+<book>...</book>
+```
+
 ### @XmlTransient
 marks a field or property as transient, i.e. it will not be serialized
 
