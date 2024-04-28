@@ -13,6 +13,7 @@ JAXB is a Java API for XML Binding, it allows to convert Java objects into XML d
   - [variable](#variable)
     - [@XmlAttribute](#xmlattribute)
     - [@XmlElement](#xmlelement)
+    - [@XmlValue](#xmlvalue)
     - [@XmlTransient](#xmltransient)
     - [@XmlElementWrapper](#xmlelementwrapper)
     - [@XmlJavaTypeAdapter](#xmljavatypeadapter)
