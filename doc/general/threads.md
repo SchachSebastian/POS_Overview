@@ -87,7 +87,6 @@ Thread.sleep(1000);
 The `yield` method gives up the current thread's turn to run.
 
 ```java
-
 Thread thread1 = new Thread(() -> {
 	for (int i = 0; i < 10; i++) {
 		System.out.println("Thread 1: " + i);
@@ -178,7 +177,6 @@ The `wait` method causes the current thread to wait until another thread calls t
 same object.
 
 ```java
-
 static {
 	Object lock = new Object();
 	Thread thread1 = new Thread(() -> {
@@ -522,8 +520,6 @@ static {
 }
 ```
 
-https://www.baeldung.com/java-completablefuture-threadpool
-
 ### Async variants
 
 The `thenApplyAsync`, `thenAcceptAsync`, `thenRunAsync`, `thenComposeAsync`, and `thenCombineAsync` methods are similar
@@ -535,4 +531,6 @@ previous stage, if the Stage wasn't completed yet.
 If you use the async methods, the function will run in a separate thread of the `ForkJoinPool.commonPool()` or
 given `Executor`.
 
-[Used Thread in Async](https://4comprehension.com/completablefuture-the-difference-between-thenapply-thenapplyasync/)
+https://www.baeldung.com/java-completablefuture-threadpool
+
+https://4comprehension.com/completablefuture-the-difference-between-thenapply-thenapplyasync/
