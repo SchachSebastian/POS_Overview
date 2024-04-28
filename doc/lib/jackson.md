@@ -19,6 +19,10 @@ Jackson is a Java API that allows you to convert objects to JSON and vice versa.
     - [@JsonUnwrapped](#jsonunwrapped)
     - [@JsonManagedReference / @JsonBackReference](#jsonmanagedreference--jsonbackreference)
     - [@JsonRootName](#jsonrootname)
+- [Jackson API](#jackson-api)
+  - [ObjectMapper](#objectmapper)
+    - [serialize](#serialize)
+    - [deserialize](#deserialize)
 
 ## Dependencies
 
@@ -157,6 +161,35 @@ public class CustomDeserializer extends StdDeserializer<String> {
     }
 }
 ```
+
+#### @JsonFormat
+
+defines the format of the date field
+
+```java
+public class Person {
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  private LocalDate birthDate;
+}
+```
+
+```json
+{
+  "birthDate": "2022-01-01"
+}
+```
+
+##### JavaTimeModule
+
+to use the `@JsonFormat` annotation, you need to register the `JavaTimeModule` module
+
+```java
+static {
+  ObjectMapper mapper = new ObjectMapper();
+  mapper.registerModule(new JavaTimeModule());
+}
+```
+
 #### @JsonAlias
 defines an alias for the field
 ```java
