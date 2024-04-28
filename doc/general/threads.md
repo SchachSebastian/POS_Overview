@@ -2,32 +2,32 @@
 
 - [Runnable](#runnable)
 - [Thread](#thread)
-	- [start](#start)
-	- [join](#join)
-	- [sleep](#sleep)
-	- [yield](#yield)
-	- [interrupt](#interrupt)
-	- [isInterrupted](#isinterrupted)
-	- [ThreadLocal](#threadlocal)
-	- [synchronized](#synchronized)
-	- [wait/notify](#waitnotify)
+  - [start](#start)
+  - [join](#join)
+  - [sleep](#sleep)
+  - [yield](#yield)
+  - [interrupt](#interrupt)
+  - [isInterrupted](#isinterrupted)
+  - [ThreadLocal](#threadlocal)
+  - [synchronized](#synchronized)
+  - [wait/notify](#waitnotify)
 - [ExecutorService](#executorservice)
-	- [ThreadPoolExecutor](#threadpoolexecutor)
-		- [newFixedThreadPool](#newfixedthreadpool)
-		- [newCachedThreadPool](#newcachedthreadpool)
-		- [newSingleThreadExecutor](#newsinglethreadexecutor)
-		- [newScheduledThreadPool](#newscheduledthreadpool)
-	- [Callable](#callable)
-	- [Future](#future)
-		- [cancel(mayInterruptIfRunning)](#cancelmayinterruptifrunning)
-	- [CompletionService](#completionservice)
-	- [CompletableFuture](#completablefuture)
-		- [thenApply](#thenapply)
-		- [thenAccept](#thenaccept)
-		- [thenRun](#thenrun)
-		- [thenCompose](#thencompose)
-		- [thenCombine](#thencombine)
-		- [Async variants](#async-variants)
+  - [ThreadPoolExecutor](#threadpoolexecutor)
+    - [newFixedThreadPool](#newfixedthreadpool)
+    - [newCachedThreadPool](#newcachedthreadpool)
+    - [newSingleThreadExecutor](#newsinglethreadexecutor)
+    - [newScheduledThreadPool](#newscheduledthreadpool)
+  - [Callable](#callable)
+  - [Future](#future)
+    - [cancel(mayInterruptIfRunning)](#cancelmayinterruptifrunning)
+  - [CompletionService](#completionservice)
+  - [CompletableFuture](#completablefuture)
+    - [thenApply](#thenapply)
+    - [thenAccept](#thenaccept)
+    - [thenRun](#thenrun)
+    - [thenCompose](#thencompose)
+    - [thenCombine](#thencombine)
+    - [Async variants](#async-variants)
 
 ## Runnable
 
@@ -35,9 +35,9 @@ The `Runnable` interface represents a task that can be executed by a thread.
 
 ```java
 static {
-	Runnable task = () -> System.out.println("Hello, World!");
-	Thread thread = new Thread(task);
-	thread.start();
+  Runnable task = () -> System.out.println("Hello, World!");
+  Thread thread = new Thread(task);
+  thread.start();
 }
 ```
 
@@ -47,8 +47,8 @@ A thread is a lightweight process that can run concurrently with other threads i
 
 ```java
 static {
-	Thread thread = new Thread(() -> System.out.println("Hello, World!"));
-	thread.start();
+  Thread thread = new Thread(() -> System.out.println("Hello, World!"));
+  thread.start();
 }
 ```
 
@@ -62,15 +62,11 @@ The `join` method waits for the thread to finish before continuing.
 
 ```java
 Thread thread = new Thread(() -> System.out.println("Hello, World!"));
-thread.
-start();
+thread.start();
 try{
-		thread.
-join();
-}catch(
-InterruptedException e){
-		e.
-printStackTrace();
+  thread.join();
+} catch (InterruptedException e){
+  e.printStackTrace();
 }
 ```
 
@@ -88,22 +84,20 @@ The `yield` method gives up the current thread's turn to run.
 
 ```java
 Thread thread1 = new Thread(() -> {
-	for (int i = 0; i < 10; i++) {
-		System.out.println("Thread 1: " + i);
-		Thread.yield();
-	}
+  for (int i = 0; i < 10; i++) {
+    System.out.println("Thread 1: " + i);
+    Thread.yield();
+  }
 });
 Thread thread2 = new Thread(() -> {
-	for (int i = 0; i < 10; i++) {
-		System.out.println("Thread 2: " + i);
-		Thread.yield();
-	}
+  for (int i = 0; i < 10; i++) {
+    System.out.println("Thread 2: " + i);
+    Thread.yield();
+  }
 });
 
-thread1.
-start();
-thread2.
-start();
+thread1.start();
+thread2.start();
 ```
 
 ### interrupt
@@ -114,17 +108,15 @@ It also sets the interrupted flag to `true`. see [isInterrupted](#isinterrupted)
 
 ```java
 Thread thread = new Thread(() -> {
-	try {
-		Thread.sleep(10000);
-	} catch (InterruptedException e) {
-		System.out.println("Thread interrupted");
-	}
+  try {
+    Thread.sleep(10000);
+  } catch (InterruptedException e) {
+    System.out.println("Thread interrupted");
+  }
 });
 
-thread.
-start();
-thread.
-interrupt();
+thread.start();
+thread.interrupt();
 ```
 
 ### isInterrupted
@@ -133,17 +125,14 @@ The `isInterrupted` method checks if the thread has been interrupted.
 
 ```java
 Thread thread = new Thread(() -> {
-	while (!Thread.currentThread().isInterrupted()) {
-		System.out.println("Running...");
-	}
+  while (!Thread.currentThread().isInterrupted()) {
+    System.out.println("Running...");
+  }
 });
 
-thread.
-start();
-Thread.
-sleep(1000);
-thread.
-interrupt();
+thread.start();
+Thread.sleep(1000);
+thread.interrupt();
 ```
 
 ### ThreadLocal
@@ -153,8 +142,8 @@ initialized copy of the variable.
 
 ```java
 static {
-	ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 42);
-	System.out.println(threadLocal.get());
+  ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 42);
+  System.out.println(threadLocal.get());
 }
 ```
 
@@ -164,10 +153,10 @@ The `synchronized` keyword is used to create a critical section that can be acce
 
 ```java
 static {
-	Object lock = new Object();
-	synchronized (lock) {
-		System.out.println("Hello, World!");
-	}
+  Object lock = new Object();
+  synchronized (lock) {
+    System.out.println("Hello, World!");
+  }
 }
 ```
 
@@ -178,25 +167,25 @@ same object.
 
 ```java
 static {
-	Object lock = new Object();
-	Thread thread1 = new Thread(() -> {
-		synchronized (lock) {
-			try {
-				lock.wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			System.out.println("Thread 1: Hello, World!");
-		}
-	});
-	Thread thread2 = new Thread(() -> {
-		synchronized (lock) {
-			System.out.println("Thread 2: Hello, World!");
-			lock.notify();
-		}
-	});
-	thread1.start();
-	thread2.start();
+  Object lock = new Object();
+  Thread thread1 = new Thread(() -> {
+    synchronized (lock) {
+      try {
+        lock.wait();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      System.out.println("Thread 1: Hello, World!");
+    }
+  });
+  Thread thread2 = new Thread(() -> {
+    synchronized (lock) {
+      System.out.println("Thread 2: Hello, World!");
+      lock.notify();
+    }
+  });
+  thread1.start();
+  thread2.start();
 }
 // Output:
 // Thread 2: Hello, World!
@@ -213,10 +202,10 @@ With ThreadPoolExecutor, you can create a pool of threads and submit tasks to be
 import java.util.concurrent.Executors;
 
 static {
-	ExecutorService executor = Executors.newCachedThreadPool();
-	executor.submit(() -> System.out.println("Task 1"));
-	executor.submit(() -> System.out.println("Task 2"));
-	executor.shutdown();
+  ExecutorService executor = Executors.newCachedThreadPool();
+  executor.submit(() -> System.out.println("Task 1"));
+  executor.submit(() -> System.out.println("Task 2"));
+  executor.shutdown();
 }
 ```
 
@@ -230,13 +219,13 @@ method.
 
 ```java
 static {
-	ExecutorService executor = Executors.newFixedThreadPool(2, run -> {
-		Thread thread = new Thread(run);
-		thread.setName("MyThread");
-		return thread;
-	});
-	executor.submit(() -> System.out.println(Thread.currentThread().getName()));
-	executor.shutdown();
+  ExecutorService executor = Executors.newFixedThreadPool(2, run -> {
+    Thread thread = new Thread(run);
+    thread.setName("MyThread");
+    return thread;
+  });
+  executor.submit(() -> System.out.println(Thread.currentThread().getName()));
+  executor.shutdown();
 }
 ```
 
@@ -248,10 +237,10 @@ Creates a thread pool that reuses a fixed number of threads operating off a shar
 import java.util.concurrent.Executors;
 
 static {
-	ExecutorService executor = Executors.newFixedThreadPool(2);
-	executor.submit(() -> System.out.println("Task 1"));
-	executor.submit(() -> System.out.println("Task 2"));
-	executor.shutdown();
+  ExecutorService executor = Executors.newFixedThreadPool(2);
+  executor.submit(() -> System.out.println("Task 1"));
+  executor.submit(() -> System.out.println("Task 2"));
+  executor.shutdown();
 }
 ```
 
@@ -264,10 +253,10 @@ available.
 import java.util.concurrent.Executors;
 
 static {
-	ExecutorService executor = Executors.newCachedThreadPool();
-	executor.submit(() -> System.out.println("Task 1"));
-	executor.submit(() -> System.out.println("Task 2"));
-	executor.shutdown();
+  ExecutorService executor = Executors.newCachedThreadPool();
+  executor.submit(() -> System.out.println("Task 1"));
+  executor.submit(() -> System.out.println("Task 2"));
+  executor.shutdown();
 }
 ```
 
@@ -279,10 +268,10 @@ Creates a thread pool that uses a single worker thread operating off an unbounde
 import java.util.concurrent.Executors;
 
 static {
-	ExecutorService executor = Executors.newSingleThreadExecutor();
-	executor.submit(() -> System.out.println("Task 1"));
-	executor.submit(() -> System.out.println("Task 2"));
-	executor.shutdown();
+  ExecutorService executor = Executors.newSingleThreadExecutor();
+  executor.submit(() -> System.out.println("Task 1"));
+  executor.submit(() -> System.out.println("Task 2"));
+  executor.shutdown();
 }
 ```
 
@@ -296,10 +285,10 @@ Creates a thread pool that can schedule commands to run after a given delay, or 
 import java.util.concurrent.ScheduledExecutorService;
 
 static {
-	ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
-	executor.schedule(() -> System.out.println("Task 1"), 1, TimeUnit.SECONDS);
-	executor.schedule(() -> System.out.println("Task 2"), 2, TimeUnit.SECONDS);
-	executor.shutdown();
+  ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
+  executor.schedule(() -> System.out.println("Task 1"), 1, TimeUnit.SECONDS);
+  executor.schedule(() -> System.out.println("Task 2"), 2, TimeUnit.SECONDS);
+  executor.shutdown();
 }
 ```
 
@@ -309,19 +298,19 @@ The `Callable` interface is similar to `Runnable`, but it can return a result an
 
 ```java
 static {
-	ExecutorService executor = Executors.newCachedThreadPool();
-	Callable<Integer> task = () -> {
-		System.out.println("Task 1");
-		return 42;
-	};
-	Future<Integer> future = executor.submit(task);
-	try {
-		Integer result = future.get();
-		System.out.println("Result: " + result);
-	} catch (InterruptedException | ExecutionException e) {
-		e.printStackTrace();
-	}
-	executor.shutdown();
+  ExecutorService executor = Executors.newCachedThreadPool();
+  Callable<Integer> task = () -> {
+    System.out.println("Task 1");
+    return 42;
+  };
+  Future<Integer> future = executor.submit(task);
+  try {
+    Integer result = future.get();
+    System.out.println("Result: " + result);
+  } catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+  }
+  executor.shutdown();
 }
 ```
 
@@ -332,23 +321,23 @@ computation is complete, retrieve the result, and cancel the computation.
 
 ```java
 static {
-	ExecutorService executor = Executors.newCachedThreadPool();
-	Callable<Integer> task = () -> {
-		System.out.println("Task 1");
-		return 42;
-	};
-	Future<Integer> future = executor.submit(task);
-	try {
-		while (!future.isDone()) {
-			System.out.println("Waiting for result...");
-			Thread.sleep(1000);
-		}
-		Integer result = future.get();
-		System.out.println("Result: " + result);
-	} catch (InterruptedException | ExecutionException e) {
-		e.printStackTrace();
-	}
-	executor.shutdown();
+  ExecutorService executor = Executors.newCachedThreadPool();
+  Callable<Integer> task = () -> {
+    System.out.println("Task 1");
+    return 42;
+  };
+  Future<Integer> future = executor.submit(task);
+  try {
+    while (!future.isDone()) {
+      System.out.println("Waiting for result...");
+      Thread.sleep(1000);
+    }
+    Integer result = future.get();
+    System.out.println("Result: " + result);
+  } catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+  }
+  executor.shutdown();
 }
 ```
 
@@ -367,25 +356,25 @@ complete.
 import java.util.concurrent.ExecutorService;
 
 static {
-	ExecutorService executor = Executors.newCachedThreadPool();
-	CompletionService<Integer> completionService = new ExecutorCompletionService<>(executor);
-	completionService.submit(() -> {
-		System.out.println("Task 1");
-		return 42;
-	});
-	completionService.submit(() -> {
-		System.out.println("Task 2");
-		return 43;
-	});
-	try {
-		for (int i = 0; i < 2; i++) {
-			Integer result = completionService.take().get();
-			System.out.println("Result: " + result);
-		}
-	} catch (InterruptedException | ExecutionException e) {
-		e.printStackTrace();
-	}
-	executor.shutdown();
+  ExecutorService executor = Executors.newCachedThreadPool();
+  CompletionService<Integer> completionService = new ExecutorCompletionService<>(executor);
+  completionService.submit(() -> {
+    System.out.println("Task 1");
+    return 42;
+  });
+  completionService.submit(() -> {
+    System.out.println("Task 2");
+    return 43;
+  });
+  try {
+    for (int i = 0; i < 2; i++) {
+      Integer result = completionService.take().get();
+      System.out.println("Result: " + result);
+    }
+  } catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+  }
+  executor.shutdown();
 }
 ```
 
@@ -399,11 +388,11 @@ May be explicitly completed by a call to one of the `complete` methods or by a c
 import java.util.concurrent.CompletableFuture;
 
 static {
-	CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
-		System.out.println("Task 1");
-		return 42;
-	});
-	future.thenAccept(result -> System.out.println("Result: " + result));
+  CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+    System.out.println("Task 1");
+    return 42;
+  });
+  future.thenAccept(result -> System.out.println("Result: " + result));
 }
 ```
 
@@ -418,11 +407,11 @@ Besides `CompletableFuture.supplyAsync` there are other methods to create a `Com
 import java.util.concurrent.CompletableFuture;
 
 static {
-	CompletableFuture<Integer> future = new CompletableFuture<>();
-	executor.submit(() -> {
-		System.out.println("Task 1");
-		future.complete(42);
-	});
+  CompletableFuture<Integer> future = new CompletableFuture<>();
+  executor.submit(() -> {
+    System.out.println("Task 1");
+    future.complete(42);
+  });
 }
 ```
 
@@ -435,12 +424,12 @@ the result of the function.
 import java.util.concurrent.CompletableFuture;
 
 static {
-	CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
-		System.out.println("Task 1");
-		return 42;
-	});
-	future.thenApply(result -> result * 2)
-	      .thenAccept(result -> System.out.println("Result: " + result));
+  CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+    System.out.println("Task 1");
+    return 42;
+  });
+  future.thenApply(result -> result * 2)
+        .thenAccept(result -> System.out.println("Result: " + result));
 }
 ```
 
@@ -452,11 +441,11 @@ The `thenAccept` method accepts the result of the computation and returns a new 
 import java.util.concurrent.CompletableFuture;
 
 static {
-	CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
-		System.out.println("Task 1");
-		return 42;
-	});
-	future.thenAccept(result -> System.out.println("Result: " + result));
+  CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+    System.out.println("Task 1");
+    return 42;
+  });
+  future.thenAccept(result -> System.out.println("Result: " + result));
 }
 ```
 
@@ -469,11 +458,11 @@ result.
 import java.util.concurrent.CompletableFuture;
 
 static {
-	CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
-		System.out.println("Task 1");
-		return 42;
-	});
-	future.thenRun(() -> System.out.println("Task 2"));
+  CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+    System.out.println("Task 1");
+    return 42;
+  });
+  future.thenRun(() -> System.out.println("Task 2"));
 }
 ```
 
@@ -489,12 +478,12 @@ returns a `CompletableFuture`. Therefor it is useful when you want to chain mult
 import java.util.concurrent.CompletableFuture;
 
 static {
-	CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
-		System.out.println("Task 1");
-		return 42;
-	});
-	future.thenCompose(result -> CompletableFuture.supplyAsync(() -> result * 2))
-	      .thenAccept(result -> System.out.println("Result: " + result));
+  CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+    System.out.println("Task 1");
+    return 42;
+  });
+  future.thenCompose(result -> CompletableFuture.supplyAsync(() -> result * 2))
+        .thenAccept(result -> System.out.println("Result: " + result));
 }
 ```
 
@@ -507,16 +496,16 @@ combined result.
 import java.util.concurrent.CompletableFuture;
 
 static {
-	CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(() -> {
-		System.out.println("Task 1");
-		return 42;
-	});
-	CompletableFuture<Integer> future2 = CompletableFuture.supplyAsync(() -> {
-		System.out.println("Task 2");
-		return 43;
-	});
-	future1.thenCombine(future2, (result1, result2) -> result1 + result2)
-	       .thenAccept(result -> System.out.println("Result: " + result));
+  CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(() -> {
+    System.out.println("Task 1");
+    return 42;
+  });
+  CompletableFuture<Integer> future2 = CompletableFuture.supplyAsync(() -> {
+    System.out.println("Task 2");
+    return 43;
+  });
+  future1.thenCombine(future2, (result1, result2) -> result1 + result2)
+         .thenAccept(result -> System.out.println("Result: " + result));
 }
 ```
 
