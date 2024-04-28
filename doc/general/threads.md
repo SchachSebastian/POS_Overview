@@ -17,6 +17,7 @@
     - [newCachedThreadPool](#newcachedthreadpool)
     - [newSingleThreadExecutor](#newsinglethreadexecutor)
     - [newScheduledThreadPool](#newscheduledthreadpool)
+    - [shutdown](#shutdown)
   - [Callable](#callable)
   - [Future](#future)
     - [cancel(mayInterruptIfRunning)](#cancelmayinterruptifrunning)
@@ -291,6 +292,18 @@ static {
   executor.shutdown();
 }
 ```
+
+#### shutdown
+
+The `shutdown` method initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will be accepted.
+
+```java
+ExecutorService executor = Executors.newCachedThreadPool();
+executor.submit(() -> System.out.println("Task 1"));
+executor.submit(() -> System.out.println("Task 2"));
+executor.shutdown();
+```
+
 
 ## Callable
 
